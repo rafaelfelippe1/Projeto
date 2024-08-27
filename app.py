@@ -4,7 +4,7 @@ from cadastro_usuario import abrir_janela_cadastro
 
 # Configuração da janela principal
 root = tk.Tk()
-root.title("TESTE")
+root.title("Login")
 root.geometry("300x100")
 
 # Botões na janela principal para abrir as janelas de login e cadastro

@@ -1,13 +1,37 @@
 import tkinter as tk
 from tkinter import messagebox
+import mysql.connector
+from conexao import conectar_banco  # Importa a função de conexão do arquivo conexao.py
 
 def registrar_usuario(nome_completo, usuario, senha, confirmar_senha, email):
-    """Realiza o registro de um novo usuário."""
+    """Realiza o registro de um novo usuário no banco de dados."""
     if senha != confirmar_senha:
         messagebox.showerror("Cadastro", "As senhas não coincidem.")
         return
 
-    messagebox.showinfo("Cadastro", f"Usuário {usuario} cadastrado com sucesso!")
+    try:
+        conn = conectar_banco()  # Usa a função conectar_banco do arquivo conexao.py para conectar ao banco
+        cursor = conn.cursor()
+
+        # Cria a tabela se não existir
+        cursor.execute('''CREATE TABLE IF NOT EXISTS usuarios (
+                          nome_completo VARCHAR(255),
+                          usuario VARCHAR(255) UNIQUE,
+                          senha VARCHAR(255),
+                          email VARCHAR(255))''')
+
+        # Insere os dados do usuário na tabela
+        cursor.execute("INSERT INTO usuarios (nome_completo, usuario, senha, email) VALUES (%s, %s, %s, %s)",
+                       (nome_completo, usuario, senha, email))
+
+        conn.commit()  # Confirma as mudanças no banco de dados
+        messagebox.showinfo("Cadastro", f"Usuário {usuario} cadastrado com sucesso!")
+    except mysql.connector.Error as err:
+        messagebox.showerror("Erro", f"Algo deu errado: {err}")
+    finally:
+        if conn.is_connected():
+            cursor.close()
+            conn.close()
 
 def abrir_janela_cadastro():
     """Abre a janela de cadastro de usuário."""

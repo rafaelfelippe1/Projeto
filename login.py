@@ -1,14 +1,34 @@
 import tkinter as tk
 from tkinter import messagebox
-from cadastro_produto import abrir_janela_cadastro_produto
+from conexao import conectar_banco
+from janela_venda import PDVApp
 
 def fazer_login(usuario, senha):
-    """Verifica as credenciais de login."""
-    if usuario == "admin" and senha == "admin":
-        messagebox.showinfo("Login", "Acesso permitido")
-        abrir_janela_cadastro_produto()
-    else:
-        messagebox.showerror("Login", "Acesso negado")
+    """Verifica as credenciais de login no banco de dados."""
+    try:
+        conn = conectar_banco()  # Usa a função conectar_banco do arquivo conexao.py para conectar ao banco
+        cursor = conn.cursor()
+
+        # Consulta o banco de dados para verificar as credenciais
+        cursor.execute("SELECT * FROM usuarios WHERE usuario = %s AND senha = %s", (usuario, senha))
+        resultado = cursor.fetchone()
+
+        if resultado:
+            messagebox.showinfo("Login", "Acesso permitido")
+            abrir_janela_venda()
+        else:
+            messagebox.showerror("Login", "Acesso negado")
+    except mysql.connector.Error as err:
+        messagebox.showerror("Erro", f"Algo deu errado: {err}")
+    finally:
+        if conn.is_connected():
+            cursor.close()
+            conn.close()
+
+def abrir_janela_venda():
+    """Abre a janela de vendas."""
+    janela_venda = tk.Toplevel()
+    PDVApp(janela_venda)  # Cria uma instância da classe PDVApp, passando a janela de vendas
 
 def abrir_janela_login():
     """Abre a janela de login."""

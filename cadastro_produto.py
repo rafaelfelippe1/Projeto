@@ -1,12 +1,12 @@
 import tkinter as tk
 from tkinter import messagebox
 import mysql.connector
-from db_config import db_config
+from conexao import conectar_banco  # Importa a função de conexão do arquivo conexao.py
 
 def registrar_produto(nome, categoria, preco, estoque):
     """Registra um novo produto no banco de dados."""
     try:
-        conn = mysql.connector.connect(**db_config)
+        conn = conectar_banco()  # Usa a função conectar_banco do arquivo conexao.py para conectar ao banco
         cursor = conn.cursor()
 
         cursor.execute('''CREATE TABLE IF NOT EXISTS products
