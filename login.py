@@ -1,10 +1,13 @@
 import tkinter as tk
+import mysql.connector
 from tkinter import messagebox
 from conexao import conectar_banco
 from janela_venda import PDVApp
 
 def fazer_login(usuario, senha):
     """Verifica as credenciais de login no banco de dados."""
+    conn = None
+    cursor = None
     try:
         conn = conectar_banco()  # Usa a função conectar_banco do arquivo conexao.py para conectar ao banco
         cursor = conn.cursor()
@@ -21,8 +24,9 @@ def fazer_login(usuario, senha):
     except mysql.connector.Error as err:
         messagebox.showerror("Erro", f"Algo deu errado: {err}")
     finally:
-        if conn.is_connected():
+        if cursor:
             cursor.close()
+        if conn and conn.is_connected():
             conn.close()
 
 def abrir_janela_venda():

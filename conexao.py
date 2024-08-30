@@ -2,8 +2,8 @@ import mysql.connector
 
 def conectar_banco():
     return mysql.connector.connect(
-        host="localhost",
+        host="127.0.0.1",
         user="root",
         password="mysql123",
-        database="sistemavendas"
+        database="pdv"
     )
