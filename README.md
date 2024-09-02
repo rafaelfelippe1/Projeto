@@ -22,3 +22,7 @@ selecione o caminho onde  foi alocado seu codigo e selecione o arquivo "PDV.sql"
 feito isso clique em "star import" e pronto.
 
 
+caso o sistema não esteja conectando corretamente, deve ser instalada a dependência pip install --upgrade mysql-connector-python
+
+
+

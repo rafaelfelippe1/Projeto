@@ -9,6 +9,7 @@ def registrar_usuario(nome_completo, usuario, senha, confirmar_senha, email):
         messagebox.showerror("Cadastro", "As senhas não coincidem.")
         return
 
+    conn = None
     try:
         conn = conectar_banco()  # Usa a função conectar_banco do arquivo conexao.py para conectar ao banco
         cursor = conn.cursor()
@@ -29,7 +30,7 @@ def registrar_usuario(nome_completo, usuario, senha, confirmar_senha, email):
     except mysql.connector.Error as err:
         messagebox.showerror("Erro", f"Algo deu errado: {err}")
     finally:
-        if conn.is_connected():
+        if conn is not None and conn.is_connected():
             cursor.close()
             conn.close()
 
@@ -65,3 +66,4 @@ def abrir_janela_cadastro():
         entrada_email.get()
     ))
     botao_cadastrar.grid(columnspan=2)
+

@@ -1,3 +1,5 @@
+# instalar a dependência do MySQL - pip install mysql-connector
+
 import tkinter as tk
 import mysql.connector
 from tkinter import messagebox

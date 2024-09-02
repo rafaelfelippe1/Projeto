@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3308
--- Tempo de geração: 30/08/2024 às 13:54
--- Versão do servidor: 8.2.0
--- Versão do PHP: 8.2.13
+-- Host: 127.0.0.1:3306
+-- Tempo de geração: 02/09/2024 às 00:45
+-- Versão do servidor: 8.0.39
+-- Versão do PHP: 8.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -123,7 +123,8 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`nome_completo`, `usuario`, `senha`, `email`) VALUES
-('felippe pereira', 'fael1', '102030', 'felippe@pereira.com');
+('felippe pereira', 'fael1', '102030', 'felippe@pereira.com'),
+('teste', '123', '123', 'teste@');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
