@@ -1,9 +1,11 @@
 import tkinter as tk
-from tkinter import messagebox, simpledialog
+from tkinter import messagebox, simpledialog, ttk
+
 
 class DialogoPersonalizado(tk.Toplevel):  #classe que cria uma caixa de dialogo personalizada
     def __init__(self, pai, titulo=None):
         super().__init__(pai)
+        self.root = root
 
         if titulo:
             self.title(titulo)
@@ -58,6 +60,16 @@ class PDVApp:
         self.root.title("Sistema de Vendas")
         self.items = []
         self.total = 0
+
+        self.items_frame = tk.Frame(self.root)
+        self.items_frame.pack(fill=tk.BOTH, expand=True)
+
+        self.columns = ("Código", "Nome", "Unidade", "Quantidade", "Preço", "Total")
+        self.items_list = ttk.Treeview(self.items_frame, columns=self.columns, show="headings")
+        for col in self.columns:
+            self.items_list.heading(col, text=col)
+            self.items_list.column(col, anchor=tk.CENTER)
+        self.items_list.pack(fill=tk.BOTH, expand=True)
 
         # Tabela de itens
         """Aqui definimos a tabela onde serão mostrados os itens linha por linha.

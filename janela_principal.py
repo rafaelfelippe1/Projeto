@@ -1,27 +1,31 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
 
+from janela_venda import PDVApp
+
+
 class Janela_Principal:
     def __init__(self, root):
-        super().__init__()
         self.root = root
         self.root.title("Janela Principal")
         self.items = []
         self.total = 0
 
+        # Frame para centralizar os botões
+        frame_botoes = tk.Frame(self.root)
+        frame_botoes.pack(pady=20)
+
         # Botões de ação
-        """aqui definimos os nomes e tamanhos dos botoes a serem inseridos na GUI
-            e o que que cada um deles fazem atraves do comando 'self'."""
-        self.btn_cadastrar_produto = tk.Button(self.root, text="Cadastro de produto", command=self.cadastrar_produto)
+        self.btn_cadastrar_produto = tk.Button(frame_botoes, text="Cadastro de produto", command=self.cadastrar_produto)
         self.btn_cadastrar_produto.pack(side=tk.LEFT, padx=10, pady=10)
 
-        self.btn_cadastrar_cliente = tk.Button(self.root, text="Cadastro de cliente", command=self.cadastrar_cliente)
+        self.btn_cadastrar_cliente = tk.Button(frame_botoes, text="Cadastro de cliente", command=self.cadastrar_cliente)
         self.btn_cadastrar_cliente.pack(side=tk.LEFT, padx=10)
 
-        self.btn_cancelar_venda = tk.Button(self.root, text="Registro de Venda", command=self.cancelar_venda)
-        self.btn_cancelar_venda.pack(side=tk.LEFT, padx=10, pady=10)
+        self.btn_registro_venda = tk.Button(frame_botoes, text="Registro de Venda", command=self.registro_venda)
+        self.btn_registro_venda.pack(side=tk.LEFT, padx=10, pady=10)
 
-        self.btn_localizar = tk.Button(self.root, text="Localizar Venda", command=self.localizar_venda)
+        self.btn_localizar = tk.Button(frame_botoes, text="Localizar Venda", command=self.localizar_venda)
         self.btn_localizar.pack(side=tk.LEFT, padx=10, pady=10)
 
 
@@ -42,11 +46,10 @@ class Janela_Principal:
         self.atualizar_lista_itens()
         self.atualizar_total()
 
-    def cancelar_venda(self):
-        if messagebox.askyesno("Confirmar", "Tem certeza que deseja cancelar a venda?"):
-            self.items = []
-            self.atualizar_lista_itens()
-            self.atualizar_total()
+    def registro_venda(self):
+        janela_venda = tk.Toplevel()
+        PDVApp(janela_venda)  # Cria uma instância da classe PDVApp, passando a janela de vendas
+        janela_venda.geometry("600x450")
 
     def localizar_venda(self):
         termo_busca = simpledialog.askstring("Buscar Produto", "Digite o nome do produto:")
@@ -71,4 +74,3 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = Janela_Principal(root)
     root.mainloop()
-
