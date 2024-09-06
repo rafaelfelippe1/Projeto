@@ -4,7 +4,9 @@ import tkinter as tk
 import mysql.connector
 from tkinter import messagebox
 from conexao import conectar_banco
-from janela_venda import PDVApp
+# from janela_venda import PDVApp
+from janela_principal import Janela_Principal
+
 
 def fazer_login(usuario, senha):
     """Verifica as credenciais de login no banco de dados."""
@@ -20,7 +22,7 @@ def fazer_login(usuario, senha):
 
         if resultado:
             messagebox.showinfo("Login", "Acesso permitido")
-            abrir_janela_venda()
+            abrir_janela_principal()
         else:
             messagebox.showerror("Login", "Acesso negado")
     except mysql.connector.Error as err:
@@ -31,10 +33,11 @@ def fazer_login(usuario, senha):
         if conn and conn.is_connected():
             conn.close()
 
-def abrir_janela_venda():
+def abrir_janela_principal():
     """Abre a janela de vendas."""
-    janela_venda = tk.Toplevel()
-    PDVApp(janela_venda)  # Cria uma instância da classe PDVApp, passando a janela de vendas
+    janela_principal = tk.Toplevel()
+    Janela_Principal(janela_principal)  # Cria uma instância da classe PDVApp, passando a janela de vendas
+    janela_principal.geometry("600x400")
 
 def abrir_janela_login():
     """Abre a janela de login."""
